@@ -1,7 +1,7 @@
 let container = document.getElementsByClassName("graph")[0];
 console.log(container);
 
-const numBars = 20;
+const numBars = 100;
 const windowWidth = 1000;
 const windowHeight = 800;
 const width = windowWidth/numBars;
@@ -22,6 +22,7 @@ for (let i = 0; i < numBars; i++) {
     //divBar.style.width(width+"px");
     divBar.style.height = heightRng + "px";
     divBar.style.width = width + "px"
+    divBar.style.opacity = "25%";
     container.appendChild(divBar);
 }
 
@@ -33,12 +34,16 @@ function bubbleSort(numBars) {
     const loop = async() => {
         for (let i = 0; i < numBars - 1; i++) {
             for (let j = 0; j < numBars - i - 1; j++) {
+                container[j].style.opacity = "100%";
                 if (container[j].style.height > container[j + 1].style.height) {
                     [container[j].style.height, container[j + 1].style.height] 
                         = [container[j + 1].style.height, container[j].style.height];
+                    await wait(1);
+                        
                 }
-                await wait(10);
+                container[j].style.opacity = "25%";
             }
+            container[numBars - i - 1].style.opacity = "100%";
         }
     }
     loop();
@@ -48,4 +53,4 @@ function bubbleSort(numBars) {
 // let container2 = document.getElementsByClassName("bar");
 // console.log(container2);
 
-bubbleSort(20);
+bubbleSort(numBars);
