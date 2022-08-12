@@ -9,7 +9,7 @@ const width = windowWidth/numBars;
 let graph = [];
 
 for (let i = 0; i < numBars; i++) {
-    const heightRng = Math.floor((Math.random() * 10000) % windowHeight);
+    const heightRng = Math.floor((Math.random() * 10000) % windowHeight + 100);
     let bar = {
         height: heightRng,
         width: width,
@@ -25,14 +25,27 @@ for (let i = 0; i < numBars; i++) {
     container.appendChild(divBar);
 }
 
+const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 function bubbleSort(numBars) {
-    let container2 = document.getElementsByClassName("divBar");
-    console.log(container2);
-    for (let i = 0; i < numBars - 1; i++) {
-        for (let j = 0; j < numBars - i - 1; j++) {
-            //if (cont)
+    let container = document.getElementsByClassName("bar");
+    const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    const loop = async() => {
+        for (let i = 0; i < numBars - 1; i++) {
+            for (let j = 0; j < numBars - i - 1; j++) {
+                if (container[j].style.height > container[j + 1].style.height) {
+                    [container[j].style.height, container[j + 1].style.height] 
+                        = [container[j + 1].style.height, container[j].style.height];
+                }
+                await wait(10);
+            }
         }
     }
+    loop();
+    
 }
-let container2 = document.getElementsByClassName("divBar");
-    console.log(container2);
+
+// let container2 = document.getElementsByClassName("bar");
+// console.log(container2);
+
+bubbleSort(20);
