@@ -1,0 +1,10 @@
+.graph {
+    display: flex;
+    width: 1000px;
+    height: 900px;
+    align-items: flex-end;
+}
+
+.graph div {
+    background-color: red;
+}
