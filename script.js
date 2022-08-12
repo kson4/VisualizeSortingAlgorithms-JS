@@ -1,7 +1,7 @@
 let container = document.getElementsByClassName("graph")[0];
 console.log(container);
 
-const numBars = 200;
+const numBars = 100;
 const windowWidth = 1000;
 const windowHeight = 800;
 const width = windowWidth/numBars;
@@ -67,6 +67,28 @@ function selectionSort(numBars) {
     loop();
 }
 
+function insertionSort(numBars) {
+    let container = document.getElementsByClassName("bar");
+    const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    const loop = async() => {
+        for (let i = 1; i < numBars; i++) {
+            let key = container[i].style.height;
+            let j = i - 1;
+            while (j >= 0 && container[j].style.height > key) {
+                container[j + 1].style.opacity = "100%";
+                [container[j + 1].style.height, container[j].style.height] = 
+                [container[j].style.height, container[j + 1].style.height];
+                container[j].style.opacity = "75%";
+                j--;
+                await wait(1);
+            }
+            container[j + 1].style.opacity = "100%";
+            [container[j + 1].style.height, key] = [key, container[j + 1].style.height];
+        }
+    }
+    loop();
+}
+
 createGraph();
 
 document.getElementsByClassName("reset")[0].onclick = function() {
@@ -84,6 +106,11 @@ document.getElementsByClassName("bubble")[0].onclick = function() {
 document.getElementsByClassName("selection")[0].onclick = function() {
     selectionSort(numBars);
 };
+
+document.getElementsByClassName("insertion")[0].onclick = function() {
+    insertionSort(numBars);
+};
+
 
 
 //bubbleSort(numBars);
